@@ -169,7 +169,8 @@ const extractTar = async (tarPath: string, targetPath: string, options: IExtract
  */
 export const enableCustomMarketplace = (): void => {
 	(<any>product).extensionsGallery = { // Use `any` to override readonly.
-		serviceUrl: process.env.SERVICE_URL || 'https://extensions.coder.com/api',
+		// TODO: Changed MarketPlace
+		serviceUrl: process.env.SERVICE_URL || 'localhost', // https://extensions.coder.com/api
 		itemUrl: process.env.ITEM_URL || '',
 		controlUrl: '',
 		recommendationsUrl: '',
