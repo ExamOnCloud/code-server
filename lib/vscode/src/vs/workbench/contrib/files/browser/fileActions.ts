@@ -67,7 +67,7 @@ export const MOVE_FILE_TO_TRASH_LABEL = nls.localize('delete', "Delete");
 export const COPY_FILE_LABEL = nls.localize('copyFile', "Copy");
 export const PASTE_FILE_LABEL = nls.localize('pasteFile', "Paste");
 export const FileCopiedContext = new RawContextKey<boolean>('fileCopied', false);
-export const DOWNLOAD_LABEL = nls.localize('download', "Download...");
+// export const DOWNLOAD_LABEL = nls.localize('download', "Download...");
 const CONFIRM_DELETE_SETTING_KEY = 'explorer.confirmDelete';
 const MAX_UNDO_FILE_SIZE = 5000000; // 5mb
 
