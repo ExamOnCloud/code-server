@@ -4,20 +4,23 @@ set -eu
 # Copied from arch() in ci/lib.sh.
 detect_arch() {
   case "$(uname -m)" in
-  aarch64)
-    echo arm64
-    ;;
-  x86_64 | amd64)
-    echo amd64
-    ;;
-  *)
-    # This will cause the download to fail, but is intentional
-    uname -m
-    ;;
+    aarch64)
+      echo arm64
+      ;;
+    x86_64 | amd64)
+      echo amd64
+      ;;
+    *)
+      # This will cause the download to fail, but is intentional
+      uname -m
+      ;;
   esac
 }
 
 ARCH="${NPM_CONFIG_ARCH:-$(detect_arch)}"
+# This is due to an upstream issue with RHEL7/CentOS 7 comptability with node-argon2
+# See: https://github.com/cdr/code-server/pull/3422#pullrequestreview-677765057
+export npm_config_build_from_source=true
 
 main() {
   # Grabs the major version of node from $npm_config_user_agent which looks like
