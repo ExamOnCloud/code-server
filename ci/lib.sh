@@ -2,11 +2,11 @@
 set -euo pipefail
 
 pushd() {
-  builtin pushd "$@" >/dev/null
+  builtin pushd "$@" > /dev/null
 }
 
 popd() {
-  builtin popd >/dev/null
+  builtin popd > /dev/null
 }
 
 pkg_json_version() {
@@ -35,17 +35,17 @@ os() {
 }
 
 arch() {
-  case "$(uname -m)" in
-  aarch64)
-    echo arm64
-    ;;
-  x86_64 | amd64)
-    echo amd64
-    ;;
-  *)
-    echo "unknown architecture $(uname -a)"
-    exit 1
-    ;;
+  cpu="$(uname -m)"
+  case "$cpu" in
+    aarch64)
+      echo arm64
+      ;;
+    x86_64 | amd64)
+      echo amd64
+      ;;
+    *)
+      echo "$cpu"
+      ;;
   esac
 }
 
@@ -62,7 +62,7 @@ get_artifacts_url() {
   artifacts_url=$(gh api "$workflow_runs_url" | jq -r ".workflow_runs[] | select(.head_branch == \"$version_branch\") | .artifacts_url" | head -n 1)
   if [[ -z "$artifacts_url" ]]; then
     echo >&2 "ERROR: artifacts_url came back empty"
-    echo >&2 "We looked for a successful run triggered by a pull_request with for code-server version: $code_server_version and a branch named $version_branch"
+    echo >&2 "We looked for a successful run triggered by a pull_request with for code-server version: $VERSION and a branch named $version_branch"
     echo >&2 "URL used for gh API call: $workflow_runs_url"
     exit 1
   fi
@@ -85,7 +85,7 @@ download_artifact() {
   local tmp_file
   tmp_file="$(mktemp)"
 
-  gh api "$(get_artifact_url "$artifact_name")" >"$tmp_file"
+  gh api "$(get_artifact_url "$artifact_name")" > "$tmp_file"
   unzip -q -o "$tmp_file" -d "$dst"
   rm "$tmp_file"
 }

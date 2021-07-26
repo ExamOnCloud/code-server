@@ -111,7 +111,7 @@ const CUT_FILE_ID = 'filesExplorer.cut';
 KeybindingsRegistry.registerCommandAndKeybindingRule({
 	id: CUT_FILE_ID,
 	weight: KeybindingWeight.WorkbenchContrib + explorerCommandsWeightBonus,
-	when: ContextKeyExpr.and(FilesExplorerFocusCondition, ExplorerRootContext.toNegated()),
+	when: ContextKeyExpr.and(FilesExplorerFocusCondition, ExplorerRootContext.toNegated(), ExplorerResourceNotReadonlyContext),
 	primary: KeyMod.CtrlCmd | KeyCode.KEY_X,
 	handler: cutFileHandler,
 });
@@ -462,7 +462,7 @@ MenuRegistry.appendMenuItem(MenuId.ExplorerContext, {
 		id: CUT_FILE_ID,
 		title: nls.localize('cut', "Cut")
 	},
-	when: ExplorerRootContext.toNegated()
+	when: ContextKeyExpr.and(ExplorerRootContext.toNegated(), ExplorerResourceNotReadonlyContext)
 });
 
 MenuRegistry.appendMenuItem(MenuId.ExplorerContext, {
@@ -504,16 +504,34 @@ MenuRegistry.appendMenuItem(MenuId.ExplorerContext, {
 // 	)
 // }));
 
+// TODO: Removing Upload Option
+// MenuRegistry.appendMenuItem(MenuId.ExplorerContext, ({
+// 	group: '5b_importexport',
+// 	order: 20,
+// 	command: {
+// 		id: UPLOAD_COMMAND_ID,
+// 		title: UPLOAD_LABEL,
+// 	},
+// 	when: ContextKeyExpr.and(
+// 		// only in web
+// 		IsWebContext,
+// 		// only on folders
+// 		ExplorerFolderContext,
+// 		// only on editable folders
+// 		ExplorerResourceNotReadonlyContext
+// 	)
+// }));
+
 MenuRegistry.appendMenuItem(MenuId.ExplorerContext, {
 	group: '6_copypath',
-	order: 30,
+	order: 10,
 	command: copyPathCommand,
 	when: ResourceContextKey.IsFileSystemResource
 });
 
 MenuRegistry.appendMenuItem(MenuId.ExplorerContext, {
 	group: '6_copypath',
-	order: 30,
+	order: 20,
 	command: copyRelativePathCommand,
 	when: ResourceContextKey.IsFileSystemResource
 });
