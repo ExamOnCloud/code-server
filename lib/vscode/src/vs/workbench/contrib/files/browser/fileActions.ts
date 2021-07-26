@@ -60,10 +60,11 @@ export const MOVE_FILE_TO_TRASH_LABEL = nls.localize('delete', "Delete");
 export const COPY_FILE_LABEL = nls.localize('copyFile', "Copy");
 export const PASTE_FILE_LABEL = nls.localize('pasteFile', "Paste");
 export const FileCopiedContext = new RawContextKey<boolean>('fileCopied', false);
-export const DOWNLOAD_COMMAND_ID = 'explorer.download';
-export const DOWNLOAD_LABEL = nls.localize('download', "Download...");
-export const UPLOAD_COMMAND_ID = 'explorer.upload';
-export const UPLOAD_LABEL = nls.localize('upload', "Upload...");
+// TODO: Removing Download and Upload
+// export const DOWNLOAD_COMMAND_ID = 'explorer.download';
+// export const DOWNLOAD_LABEL = nls.localize('download', "Download...");
+// export const UPLOAD_COMMAND_ID = 'explorer.upload';
+// export const UPLOAD_LABEL = nls.localize('upload', "Upload...");
 const CONFIRM_DELETE_SETTING_KEY = 'explorer.confirmDelete';
 const MAX_UNDO_FILE_SIZE = 5000000; // 5mb
 
@@ -928,40 +929,40 @@ export const cutFileHandler = async (accessor: ServicesAccessor) => {
 	}
 };
 
-const downloadFileHandler = async (accessor: ServicesAccessor) => {
-	const explorerService = accessor.get(IExplorerService);
-	const instantiationService = accessor.get(IInstantiationService);
+// const downloadFileHandler = async (accessor: ServicesAccessor) => {
+// 	const explorerService = accessor.get(IExplorerService);
+// 	const instantiationService = accessor.get(IInstantiationService);
 
-	const context = explorerService.getContext(true);
-	const explorerItems = context.length ? context : explorerService.roots;
+// 	const context = explorerService.getContext(true);
+// 	const explorerItems = context.length ? context : explorerService.roots;
 
-	const downloadHandler = instantiationService.createInstance(FileDownload);
-	return downloadHandler.download(explorerItems);
-};
+// 	const downloadHandler = instantiationService.createInstance(FileDownload);
+// 	return downloadHandler.download(explorerItems);
+// };
 
-CommandsRegistry.registerCommand({
-	id: DOWNLOAD_COMMAND_ID,
-	handler: downloadFileHandler
-});
+// CommandsRegistry.registerCommand({
+// 	id: DOWNLOAD_COMMAND_ID,
+// 	handler: downloadFileHandler
+// });
 
-const uploadFileHandler = async (accessor: ServicesAccessor) => {
-	const explorerService = accessor.get(IExplorerService);
-	const instantiationService = accessor.get(IInstantiationService);
+// const uploadFileHandler = async (accessor: ServicesAccessor) => {
+// 	const explorerService = accessor.get(IExplorerService);
+// 	const instantiationService = accessor.get(IInstantiationService);
 
-	const context = explorerService.getContext(true);
-	const element = context.length ? context[0] : explorerService.roots[0];
+// 	const context = explorerService.getContext(true);
+// 	const element = context.length ? context[0] : explorerService.roots[0];
 
-	const files = await triggerUpload();
-	if (files) {
-		const browserUpload = instantiationService.createInstance(BrowserFileUpload);
-		return browserUpload.upload(element, files);
-	}
-};
+// 	const files = await triggerUpload();
+// 	if (files) {
+// 		const browserUpload = instantiationService.createInstance(BrowserFileUpload);
+// 		return browserUpload.upload(element, files);
+// 	}
+// };
 
-CommandsRegistry.registerCommand({
-	id: UPLOAD_COMMAND_ID,
-	handler: uploadFileHandler
-});
+// CommandsRegistry.registerCommand({
+// 	id: UPLOAD_COMMAND_ID,
+// 	handler: uploadFileHandler
+// });
 
 export const pasteFileHandler = async (accessor: ServicesAccessor) => {
 	const clipboardService = accessor.get(IClipboardService);

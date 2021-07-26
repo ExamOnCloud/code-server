@@ -85,6 +85,7 @@ export class ExtensionsViewletViewsContribution implements IWorkbenchContributio
 		@IContextKeyService private readonly contextKeyService: IContextKeyService
 	) {
 		this.container = viewDescriptorService.getViewContainerById(VIEWLET_ID)!;
+
 		this.registerViews();
 	}
 
